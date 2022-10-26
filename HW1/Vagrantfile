@@ -1,0 +1,24 @@
+Vagrant.configure(“2”) do |config|
+	config.vm.box = “ubuntu/jammy”
+
+	config.vm.network “private network”, ip: “192.168.33.10”
+	config.vm.network “public_network”
+	config.vm.network “forwarded_port”, guest: 80, host: 8080
+
+	config.vm.provider “virtualbox” do |vb|
+		v.gui = true
+		v.name=”justinserver”
+		v.memory = 8192
+		v.cpus = 1
+	end
+
+	config.vm.provision “shell,” inline: <<-SHELL
+		apt-get update
+		apt-get install sysbench
+		sysbench –test=cpu –time=15 –cpu-max-prime=10000 run
+		sysbench –test=fileio –file-total-size=1G –file-test-mode=rndrw prepare
+		sysbench –test=fileio –file-total-size=1G –file-test-mode=rndrw –time=15 –max-requests=0 run
+		sysbench –test=fileio –file-total-size=1G –file-test-mode=rndrw cleanup
+		sync
+	SHELL
+end
