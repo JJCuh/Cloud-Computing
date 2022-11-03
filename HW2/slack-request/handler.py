@@ -10,7 +10,7 @@ def handle(req):
                 "value": "100",
                 "short": True
             }],
-            "author_name": "Justin Li"
+            "author_name": "Justin Li",
             "author_icon": "https://avatars.githubusercontent.com/justinwli",
             "image_url": "https://i.ytimg.com/vi/AzFbpNqYsio/maxresdefault.jpg"
         },

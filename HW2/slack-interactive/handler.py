@@ -1,5 +1,6 @@
 import json
 import urllib
+
 def handle(req):
     urlstring = urllib.unquote(req).decode('utf8').strip('payload=')
     response = json.loads(urlstring)
